@@ -14,6 +14,7 @@ function formatTime(seconds: number) {
 
 export function PujoSoundtrack() {
   const playback = usePlayback({
+    playlist: AGOMONI_PLAYLIST,
     tracks: AGOMONI_TRACKS,
   });
 

@@ -1,4 +1,5 @@
 export type Repeat = "all" | "one" | "off";
+export type SleepTimerValue = number | "track-end" | null;
 
 export type Track = {
   id: string;
@@ -16,7 +17,7 @@ export type Playlist = {
   shuffleByDefault?: boolean;
 };
 
-export type AdvanceReason = "ended" | "manual" | "error";
+export type AdvanceReason = "ended" | "manual" | "error" | "stalled";
 
 export type YouTubePlayer = {
   destroy(): void;
@@ -25,6 +26,7 @@ export type YouTubePlayer = {
   loadVideoById(videoId: string): void;
   pauseVideo(): void;
   playVideo(): void;
+  setVolume(volume: number): void;
   seekTo(seconds: number, allowSeekAhead: boolean): void;
 };
 
