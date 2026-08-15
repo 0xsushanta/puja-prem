@@ -1,26 +1,492 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #140b09;
+  --foreground: #f7ead7;
+  --charcoal: #140b09;
+  --vermillion: #a32724;
+  --sindoor: #cf3a30;
+  --antique-gold: #dfbd73;
+  --ivory: #f7ead7;
+  --smoke: rgba(244, 228, 204, 0.22);
+  --font-display: "Baskerville", "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    Georgia, serif;
+  --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", Helvetica, sans-serif;
+  --pointer-x: 0;
+  --pointer-y: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--background);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--antique-gold) 45%, transparent);
+  color: var(--ivory);
+}
+
+.pujo-scene {
+  position: relative;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at top left, rgba(248, 222, 168, 0.18), transparent 32%),
+    radial-gradient(circle at center, rgba(226, 119, 64, 0.14), transparent 38%),
+    linear-gradient(180deg, #2d1610 0%, var(--charcoal) 62%, #0d0706 100%);
+}
+
+.pujo-scene::before,
+.pujo-scene::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 999px;
+  opacity: 0.35;
+}
+
+.pujo-scene::before {
+  top: clamp(1.1rem, 3vw, 2.2rem);
+  right: clamp(1.1rem, 3vw, 2.2rem);
+  width: clamp(7rem, 17vw, 14rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(223, 189, 115, 0.18);
+  box-shadow:
+    0 0 0 0.9rem rgba(223, 189, 115, 0.05),
+    0 0 0 2.1rem rgba(223, 189, 115, 0.03);
+}
+
+.pujo-scene::after {
+  bottom: clamp(1rem, 3vw, 2.4rem);
+  left: clamp(1.1rem, 3vw, 2.2rem);
+  width: clamp(9rem, 18vw, 15rem);
+  height: clamp(9rem, 18vw, 15rem);
+  background:
+    radial-gradient(circle, transparent 52%, rgba(223, 189, 115, 0.12) 53%, transparent 57%),
+    radial-gradient(circle, transparent 66%, rgba(223, 189, 115, 0.1) 67%, transparent 71%);
+}
+
+.pujo-scene__backdrop,
+.pujo-scene__poster {
+  position: absolute;
+  inset: 0;
+}
+
+.pujo-scene__backdrop {
+  z-index: 0;
+}
+
+.pujo-scene__poster {
+  z-index: 1;
+  transform: translate3d(
+      calc(var(--pointer-x) * -1.45rem),
+      calc(var(--pointer-y) * -1.8rem),
+      0
+    )
+    scale(1.035);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.pujo-scene__image {
+  object-fit: cover;
+  object-position: center center;
+  filter: saturate(1.05) contrast(1.06) brightness(0.83);
+}
+
+.pujo-scene__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(11, 6, 5, 0.72) 0%, rgba(11, 6, 5, 0.34) 29%, transparent 54%),
+    linear-gradient(180deg, rgba(11, 6, 5, 0.12) 0%, transparent 24%, rgba(11, 6, 5, 0.68) 100%),
+    radial-gradient(circle at center, transparent 38%, rgba(11, 6, 5, 0.72) 100%);
+}
+
+.pujo-scene__beam,
+.pujo-scene__halo,
+.pujo-scene__mist,
+.pujo-scene__noise {
+  position: absolute;
+  pointer-events: none;
+}
+
+.pujo-scene__beam {
+  inset: -10% auto auto -10%;
+  width: min(54rem, 70vw);
+  height: min(52rem, 72vw);
+  background:
+    radial-gradient(circle at 28% 28%, rgba(255, 243, 214, 0.82), transparent 26%),
+    linear-gradient(125deg, rgba(255, 226, 163, 0.38), transparent 60%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  animation: shimmerPulse 12s ease-in-out infinite;
+}
+
+.pujo-scene__halo {
+  top: 12%;
+  left: 50%;
+  width: min(32rem, 42vw);
+  height: min(32rem, 42vw);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 240, 205, 0.3) 0%, rgba(246, 204, 115, 0.18) 40%, transparent 72%);
+  filter: blur(30px);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.pujo-scene__mist {
+  bottom: -6%;
+  width: 20rem;
+  height: 14rem;
+  background:
+    radial-gradient(circle at center, var(--smoke) 0%, rgba(244, 228, 204, 0.08) 45%, transparent 74%);
+  filter: blur(18px);
+  animation: mistDrift 20s ease-in-out infinite;
+}
+
+.pujo-scene__mist--left {
+  left: 2%;
+}
+
+.pujo-scene__mist--right {
+  right: 1%;
+  animation-delay: -9s;
+}
+
+.pujo-scene__noise {
+  inset: 0;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.04) 0,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+
+.pujo-scene__particle,
+.pujo-scene__petal {
+  position: absolute;
+  pointer-events: none;
+}
+
+.pujo-scene__particle {
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 241, 188, 0.95), rgba(255, 241, 188, 0));
+  box-shadow: 0 0 18px rgba(255, 218, 122, 0.25);
+  opacity: 0;
+  animation: emberFloat var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+.pujo-scene__petal {
+  width: 1.1rem;
+  height: 0.55rem;
+  border-radius: 999px 45% 999px 45%;
+  background: linear-gradient(135deg, rgba(255, 146, 120, 0.95), rgba(188, 20, 42, 0.92));
+  box-shadow: 0 0 12px rgba(207, 58, 48, 0.25);
+  opacity: 0;
+  transform: rotate(var(--rotate));
+  animation: petalFloat var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.pujo-scene__shell {
+  position: relative;
+  z-index: 3;
+  min-height: 100svh;
+  padding: clamp(1.4rem, 3vw, 2.8rem);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.pujo-scene__header {
+  max-width: 28rem;
+}
+
+.pujo-scene__eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.36em;
+  font-size: clamp(0.64rem, 0.55rem + 0.45vw, 0.92rem);
+  color: color-mix(in srgb, var(--antique-gold) 74%, white);
+  text-shadow: 0 0 18px rgba(255, 221, 148, 0.15);
+}
+
+.pujo-scene__headline {
+  align-self: center;
+  max-width: min(46rem, 82vw);
+  transform: translate3d(calc(var(--pointer-x) * 1rem), calc(var(--pointer-y) * 0.7rem), 0);
+  will-change: transform;
+}
+
+.pujo-scene__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.3rem, 8.1vw, 7.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+  text-shadow:
+    0 0 26px rgba(11, 6, 5, 0.25),
+    0 0 42px rgba(11, 6, 5, 0.5);
+}
+
+.pujo-scene__title span {
+  display: block;
+}
+
+.pujo-scene__title-accent {
+  color: color-mix(in srgb, var(--antique-gold) 78%, white);
+  font-style: italic;
+}
+
+.pujo-scene__subtitle {
+  margin: 1.35rem 0 0;
+  max-width: 25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 0.98rem + 0.55vw, 1.65rem);
+  font-style: italic;
+  line-height: 1.35;
+  color: rgba(247, 234, 215, 0.88);
+  text-wrap: balance;
+  text-shadow: 0 0 24px rgba(11, 6, 5, 0.4);
+}
+
+.pujo-scene__footer {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.pujo-scene__memory {
+  margin: 0;
+  max-width: 24rem;
+  font-size: clamp(0.94rem, 0.9rem + 0.18vw, 1.08rem);
+  line-height: 1.45;
+  color: rgba(247, 234, 215, 0.8);
+  text-wrap: balance;
+  transform: translate3d(calc(var(--pointer-x) * -0.55rem), calc(var(--pointer-y) * -0.35rem), 0);
+  will-change: transform;
+}
+
+.pujo-share {
+  max-width: 22rem;
+  margin-left: auto;
+  text-align: right;
+}
+
+.pujo-share__button {
+  appearance: none;
+  border: 1px solid rgba(247, 234, 215, 0.2);
+  background:
+    linear-gradient(180deg, rgba(255, 244, 217, 0.2) 0%, rgba(223, 189, 115, 0.08) 100%),
+    rgba(15, 9, 8, 0.24);
+  color: var(--ivory);
+  font: inherit;
+  font-size: 0.98rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 0.98rem 1.45rem;
+  box-shadow:
+    0 22px 44px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 240, 205, 0.16);
+  backdrop-filter: blur(14px);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.pujo-share__button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(247, 234, 215, 0.34);
+  box-shadow:
+    0 28px 52px rgba(0, 0, 0, 0.28),
+    0 0 22px rgba(223, 189, 115, 0.12);
+}
+
+.pujo-share__button:focus-visible {
+  outline: 2px solid rgba(223, 189, 115, 0.66);
+  outline-offset: 4px;
+}
+
+.pujo-share__note {
+  margin: 0.85rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: rgba(247, 234, 215, 0.7);
+}
+
+@keyframes shimmerPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate3d(1.1rem, 0.75rem, 0) scale(1.04);
+  }
+}
+
+@keyframes mistDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.52;
+  }
+
+  50% {
+    transform: translate3d(1.8rem, -1.1rem, 0) scale(1.08);
+    opacity: 0.78;
+  }
+}
+
+@keyframes emberFloat {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 1.4rem, 0) scale(0.65);
+  }
+
+  12% {
+    opacity: 0.8;
+  }
+
+  65% {
+    opacity: 0.42;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(1.8rem, -4.2rem, 0) scale(1.2);
+  }
+}
+
+@keyframes petalFloat {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(var(--rotate)) scale(0.8);
+  }
+
+  18% {
+    opacity: 0.88;
+  }
+
+  78% {
+    opacity: 0.66;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(2.2rem, 3rem, 0) rotate(calc(var(--rotate) + 22deg)) scale(1.12);
+  }
+}
+
+@media (max-width: 960px) {
+  .pujo-scene__vignette {
+    background:
+      linear-gradient(180deg, rgba(11, 6, 5, 0.28) 0%, transparent 26%, rgba(11, 6, 5, 0.76) 100%),
+      linear-gradient(90deg, rgba(11, 6, 5, 0.5) 0%, rgba(11, 6, 5, 0.18) 38%, transparent 100%);
+  }
+
+  .pujo-scene__headline {
+    align-self: end;
+    max-width: min(32rem, 100%);
+    padding-bottom: 2rem;
+  }
+
+  .pujo-scene__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pujo-share {
+    width: 100%;
+    max-width: 26rem;
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .pujo-scene::before {
+    width: 5.5rem;
+    box-shadow:
+      0 0 0 0.6rem rgba(223, 189, 115, 0.04),
+      0 0 0 1.4rem rgba(223, 189, 115, 0.025);
+  }
+
+  .pujo-scene::after {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .pujo-scene__shell {
+    padding: 1.15rem;
+  }
+
+  .pujo-scene__eyebrow {
+    max-width: 14rem;
+    letter-spacing: 0.28em;
+    line-height: 1.55;
+  }
+
+  .pujo-scene__headline {
+    padding-bottom: 1rem;
+  }
+
+  .pujo-scene__subtitle {
+    max-width: 14rem;
+  }
+
+  .pujo-share__button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pujo-scene__poster,
+  .pujo-scene__headline,
+  .pujo-scene__memory,
+  .pujo-scene__beam,
+  .pujo-scene__mist,
+  .pujo-scene__particle,
+  .pujo-scene__petal,
+  .pujo-share__button {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
