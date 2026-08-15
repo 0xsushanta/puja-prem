@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { startTransition, useEffect, useEffectEvent, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import type { Track } from "@/src/audio/types";
 import { PujoSoundtrack } from "./pujo-soundtrack";
 
 const petals = [
@@ -46,8 +46,6 @@ const shareCopy: Record<ShareState, { button: string; note: string }> = {
   },
 };
 
-import type { Track } from "@/src/audio/types";
-
 type PujoHeroProps = {
   tracks?: Track[];
 };
@@ -58,13 +56,29 @@ export function PujoHero({ tracks }: PujoHeroProps) {
   const pointerCurrentRef = useRef({ x: 0, y: 0 });
   const frameRef = useRef<number | null>(null);
   const [shareState, setShareState] = useState<ShareState>("idle");
+  const [timeStr, setTimeStr] = useState<string>("--:--");
+
+  // Live Kolkata Time Clock
+  useEffect(() => {
+    const updateClock = () => {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      };
+      setTimeStr(new Intl.DateTimeFormat("en-US", options).format(now));
+    };
+
+    updateClock();
+    const interval = setInterval(updateClock, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const applyMotion = useEffectEvent(() => {
     const scene = sceneRef.current;
-
-    if (!scene) {
-      return;
-    }
+    if (!scene) return;
 
     pointerCurrentRef.current.x +=
       (pointerTargetRef.current.x - pointerCurrentRef.current.x) * 0.055;
@@ -92,10 +106,7 @@ export function PujoHero({ tracks }: PujoHeroProps) {
 
   const updatePointer = (clientX: number, clientY: number) => {
     const scene = sceneRef.current;
-
-    if (!scene) {
-      return;
-    }
+    if (!scene) return;
 
     const bounds = scene.getBoundingClientRect();
     const x = (clientX - bounds.left) / bounds.width - 0.5;
@@ -141,17 +152,13 @@ export function PujoHero({ tracks }: PujoHeroProps) {
   };
 
   useEffect(() => {
-    if (shareState === "idle") {
-      return;
-    }
+    if (shareState === "idle") return;
 
     const timeoutId = window.setTimeout(() => {
       startTransition(() => setShareState("idle"));
     }, 2600);
 
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
+    return () => window.clearTimeout(timeoutId);
   }, [shareState]);
 
   return (
@@ -161,6 +168,7 @@ export function PujoHero({ tracks }: PujoHeroProps) {
       onPointerMove={(event) => updatePointer(event.clientX, event.clientY)}
       onPointerLeave={resetPointer}
     >
+      {/* Ambient Dark Canvas Backdrop (No Poster Image) */}
       <div aria-hidden="true" className="pujo-scene__backdrop">
         <div className="pujo-scene__beam" />
         <div className="pujo-scene__halo" />
@@ -201,47 +209,63 @@ export function PujoHero({ tracks }: PujoHeroProps) {
         ))}
       </div>
 
-      <div className="pujo-scene__poster">
-        <Image
-          src="/durga_ma.png"
-          alt="A couple standing together before Durga Maa in a glowing Kolkata pandal."
-          fill
-          priority
-          sizes="100vw"
-          className="pujo-scene__image"
-        />
-        <div aria-hidden="true" className="pujo-scene__vignette" />
-      </div>
-
       <div className="pujo-scene__shell">
+        {/* Top Header / Brand Nav (busdriver.wtf style) */}
         <header className="pujo-scene__header">
-          <p className="pujo-scene__eyebrow">Durga Puja. Love. Music. Nostalgia.</p>
+          <div className="pujo-scene__brand">
+            <span className="flex size-3.5 items-center justify-center rounded-full bg-[#dfbd73]/30 p-0.5">
+              <span className="size-2 rounded-full bg-[#dfbd73] shadow-[0_0_8px_#dfbd73]" />
+            </span>
+            <div>
+              <p className="font-serif text-base sm:text-lg font-bold text-[#f7ead7] leading-none">
+                পূজা প্রেম · Pujo Prem
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#dfbd73]/80 mt-1">
+                Kolkata · Autumn Nights
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 text-right">
+            <div className="hidden sm:block">
+              <p className="text-xs font-medium tabular-nums text-[#f7ead7]/90 leading-none">
+                {timeStr}
+              </p>
+              <p className="text-[9px] uppercase tracking-widest text-[#dfbd73]/70 mt-1">
+                Kolkata Time
+              </p>
+            </div>
+            <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-wider text-[#f7ead7]/80 backdrop-blur-md">
+              {tracks?.length ?? 13} Songs · Nonstop
+            </span>
+          </div>
         </header>
 
+        {/* Central Hero Typography */}
         <div className="pujo-scene__headline">
+          <p className="pujo-scene__eyebrow mb-3">Durga Puja · Love · Music · Nostalgia</p>
           <h1 className="pujo-scene__title">
             <span>Every Pujo</span>
             <span>Has A</span>
             <span className="pujo-scene__title-accent">Love Story.</span>
           </h1>
-          <p className="pujo-scene__subtitle">Some songs smell like autumn.</p>
-          <PujoSoundtrack tracks={tracks} />
-        </div>
-
-        <footer className="pujo-scene__footer">
-          <p className="pujo-scene__memory">
-            We fell in love between pushpanjali and bijoya.
+          <p className="pujo-scene__subtitle">
+            Some songs smell like autumn &amp; pandal light.
           </p>
 
-          <div className="pujo-share">
-            <button className="pujo-share__button" type="button" onClick={sharePage}>
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={sharePage}
+              className="pujo-share__button"
+            >
               {shareCopy[shareState].button}
             </button>
-            <p aria-live="polite" className="pujo-share__note">
-              {shareCopy[shareState].note}
-            </p>
           </div>
-        </footer>
+        </div>
+
+        {/* Bottom Floating Soundtrack Dock */}
+        <PujoSoundtrack tracks={tracks} />
       </div>
     </section>
   );
