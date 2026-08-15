@@ -61,11 +61,7 @@ body {
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(ellipse at 50% 20%, rgba(223, 189, 115, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 15% 50%, rgba(207, 58, 48, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 85% 60%, rgba(226, 119, 64, 0.1) 0%, transparent 45%),
-    linear-gradient(180deg, #1c0e0a 0%, #120907 60%, #0a0403 100%);
+  background: #120907;
 }
 
 .pujo-scene::before,
@@ -105,12 +101,36 @@ body {
   z-index: 0;
 }
 
+.pujo-scene__bg-image {
+  object-fit: cover;
+  object-position: center 35%;
+  filter: saturate(1.08) contrast(1.08) brightness(0.65);
+  transform: translate3d(
+      calc(var(--pointer-x) * -1.2rem),
+      calc(var(--pointer-y) * -0.8rem),
+      0
+    )
+    scale(1.05);
+  will-change: transform;
+}
+
+.pujo-scene__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at center, rgba(18, 9, 7, 0.35) 0%, rgba(18, 9, 7, 0.85) 100%),
+    linear-gradient(180deg, rgba(18, 9, 7, 0.65) 0%, rgba(18, 9, 7, 0.25) 45%, rgba(18, 9, 7, 0.95) 100%);
+}
+
 .pujo-scene__beam,
 .pujo-scene__halo,
 .pujo-scene__mist,
 .pujo-scene__noise {
   position: absolute;
   pointer-events: none;
+  z-index: 2;
 }
 
 .pujo-scene__beam {
@@ -186,6 +206,7 @@ body {
 .pujo-scene__petal {
   position: absolute;
   pointer-events: none;
+  z-index: 2;
 }
 
 .pujo-scene__particle {
@@ -446,6 +467,7 @@ body {
   .pujo-scene__mist,
   .pujo-scene__particle,
   .pujo-scene__petal,
+  .pujo-scene__bg-image,
   .animate-spin-slow,
   .animate-soundwave-1,
   .animate-soundwave-2,

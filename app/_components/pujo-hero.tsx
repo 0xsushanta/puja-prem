@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { startTransition, useEffect, useEffectEvent, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Track } from "@/src/audio/types";
@@ -168,8 +169,17 @@ export function PujoHero({ tracks }: PujoHeroProps) {
       onPointerMove={(event) => updatePointer(event.clientX, event.clientY)}
       onPointerLeave={resetPointer}
     >
-      {/* Ambient Dark Canvas Backdrop (No Poster Image) */}
+      {/* Full-Page Background Image (durga_ma.png) & Vignette Layer */}
       <div aria-hidden="true" className="pujo-scene__backdrop">
+        <Image
+          src="/durga_ma.png"
+          alt="Durga Maa Pandal Background"
+          fill
+          priority
+          sizes="100vw"
+          className="pujo-scene__bg-image"
+        />
+        <div className="pujo-scene__vignette" />
         <div className="pujo-scene__beam" />
         <div className="pujo-scene__halo" />
         <div className="pujo-scene__mist pujo-scene__mist--left" />
