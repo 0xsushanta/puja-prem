@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { startTransition, useEffect, useEffectEvent, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import { PujoSoundtrack } from "./pujo-soundtrack";
 
 const petals = [
   { top: "13%", left: "17%", delay: "-7s", duration: "18s", rotate: "-16deg" },
@@ -218,6 +219,7 @@ export function PujoHero() {
             <span className="pujo-scene__title-accent">Love Story.</span>
           </h1>
           <p className="pujo-scene__subtitle">Some songs smell like autumn.</p>
+          <PujoSoundtrack />
         </div>
 
         <footer className="pujo-scene__footer">

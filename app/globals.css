@@ -280,6 +280,94 @@ body {
   text-shadow: 0 0 24px rgba(11, 6, 5, 0.4);
 }
 
+.pujo-soundtrack__host {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pujo-soundtrack {
+  margin-top: 1.6rem;
+  width: min(28rem, 100%);
+  padding: 1rem 1rem 1.1rem;
+  border: 1px solid rgba(247, 234, 215, 0.15);
+  border-radius: 1.4rem;
+  background:
+    linear-gradient(180deg, rgba(255, 246, 223, 0.12) 0%, rgba(223, 189, 115, 0.03) 100%),
+    rgba(15, 9, 8, 0.34);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 244, 217, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.pujo-soundtrack__status,
+.pujo-soundtrack__line {
+  margin: 0;
+}
+
+.pujo-soundtrack__status {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgba(247, 234, 215, 0.86);
+}
+
+.pujo-soundtrack__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.95rem;
+}
+
+.pujo-soundtrack__button {
+  appearance: none;
+  border: 1px solid rgba(247, 234, 215, 0.16);
+  border-radius: 999px;
+  padding: 0.82rem 1.1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 244, 217, 0.18) 0%, rgba(223, 189, 115, 0.06) 100%),
+    rgba(15, 9, 8, 0.4);
+  color: var(--ivory);
+  font: inherit;
+  font-size: 0.94rem;
+  line-height: 1.2;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.pujo-soundtrack__button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(247, 234, 215, 0.28);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+}
+
+.pujo-soundtrack__button:focus-visible {
+  outline: 2px solid rgba(223, 189, 115, 0.72);
+  outline-offset: 3px;
+}
+
+.pujo-soundtrack__button--ghost {
+  background: rgba(15, 9, 8, 0.16);
+}
+
+.pujo-soundtrack__meta {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.pujo-soundtrack__line {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: rgba(247, 234, 215, 0.66);
+}
+
 .pujo-scene__footer {
   display: flex;
   align-items: end;
@@ -469,6 +557,18 @@ body {
 
   .pujo-scene__subtitle {
     max-width: 14rem;
+  }
+
+  .pujo-soundtrack {
+    width: min(100%, 20rem);
+  }
+
+  .pujo-soundtrack__controls {
+    flex-direction: column;
+  }
+
+  .pujo-soundtrack__button {
+    width: 100%;
   }
 
   .pujo-share__button {
