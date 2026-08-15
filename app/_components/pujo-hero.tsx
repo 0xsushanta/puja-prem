@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { startTransition, useEffect, useEffectEvent, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Track } from "@/src/audio/types";
@@ -258,9 +259,12 @@ export function PujoHero({ tracks }: PujoHeroProps) {
                 Kolkata Time
               </p>
             </div>
-            <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-wider text-[#f7ead7]/80 backdrop-blur-md">
-              {tracks?.length ?? 13} Songs · Nonstop
-            </span>
+            <Link
+              href="/about"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-wider text-[#f7ead7]/80 backdrop-blur-md hover:bg-white/15 hover:text-white transition"
+            >
+              About
+            </Link>
           </div>
         </header>
 

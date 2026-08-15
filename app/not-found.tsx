@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 
@@ -30,14 +29,14 @@ export default function NotFound() {
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <a href="/" className="flex items-center gap-2.5 group cursor-pointer">
           <span className="flex size-3.5 items-center justify-center rounded-full bg-[#dfbd73]/30 p-0.5">
             <span className="size-2 rounded-full bg-[#dfbd73] shadow-[0_0_8px_#dfbd73]" />
           </span>
           <span className="font-serif text-base font-bold text-[#f7ead7] group-hover:text-white transition">
             পূজা প্রেম · Pujo Prem
           </span>
-        </Link>
+        </a>
 
         <a
           href="https://x.com/0xsushanta"
@@ -64,13 +63,13 @@ export default function NotFound() {
         </p>
 
         <div className="mt-8">
-          <Link
+          <a
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-gradient-to-b from-white/18 to-white/6 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#f7ead7] shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/35 hover:shadow-xl active:translate-y-0"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-gradient-to-b from-white/18 to-white/6 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#f7ead7] shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/35 hover:shadow-xl active:translate-y-0 cursor-pointer"
           >
             <span>🪔</span>
             <span>Return to the Soundtrack</span>
-          </Link>
+          </a>
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 export default function ErrorPage({
@@ -14,6 +13,15 @@ export default function ErrorPage({
   useEffect(() => {
     console.error("Pujo Prem runtime error:", error);
   }, [error]);
+
+  const handleTuneAgain = () => {
+    try {
+      reset();
+    } catch {
+      window.location.reload();
+    }
+    window.location.reload();
+  };
 
   return (
     <main className="pujo-scene relative min-h-screen flex flex-col justify-between p-6 sm:p-10 text-[#f7ead7] overflow-hidden">
@@ -37,14 +45,14 @@ export default function ErrorPage({
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <a href="/" className="flex items-center gap-2.5 group cursor-pointer">
           <span className="flex size-3.5 items-center justify-center rounded-full bg-[#dfbd73]/30 p-0.5">
             <span className="size-2 rounded-full bg-[#dfbd73] shadow-[0_0_8px_#dfbd73]" />
           </span>
           <span className="font-serif text-base font-bold text-[#f7ead7] group-hover:text-white transition">
             পূজা প্রেম · Pujo Prem
           </span>
-        </Link>
+        </a>
 
         <a
           href="https://x.com/0xsushanta"
@@ -73,19 +81,19 @@ export default function ErrorPage({
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             type="button"
-            onClick={() => reset()}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#dfbd73]/40 bg-[#dfbd73]/20 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#dfbd73] shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-[#dfbd73]/30 active:translate-y-0"
+            onClick={handleTuneAgain}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#dfbd73]/40 bg-[#dfbd73]/20 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#dfbd73] shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-[#dfbd73]/30 active:translate-y-0 cursor-pointer"
           >
             <span>🔄</span>
             <span>Tune Speakers Again</span>
           </button>
 
-          <Link
+          <a
             href="/"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#f7ead7]/80 transition hover:bg-white/10 hover:text-white"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#f7ead7]/80 transition hover:bg-white/10 hover:text-white cursor-pointer"
           >
             Return Home
-          </Link>
+          </a>
         </div>
       </div>
 
