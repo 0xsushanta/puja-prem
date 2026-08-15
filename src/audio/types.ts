@@ -13,7 +13,8 @@ export type Track = {
 export type Playlist = {
   slug: string;
   label: string;
-  trackIds: string[];
+  playlistId?: string;
+  trackIds?: string[];
   shuffleByDefault?: boolean;
 };
 

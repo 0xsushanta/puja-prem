@@ -46,7 +46,13 @@ const shareCopy: Record<ShareState, { button: string; note: string }> = {
   },
 };
 
-export function PujoHero() {
+import type { Track } from "@/src/audio/types";
+
+type PujoHeroProps = {
+  tracks?: Track[];
+};
+
+export function PujoHero({ tracks }: PujoHeroProps) {
   const sceneRef = useRef<HTMLElement>(null);
   const pointerTargetRef = useRef({ x: 0, y: 0 });
   const pointerCurrentRef = useRef({ x: 0, y: 0 });
@@ -219,7 +225,7 @@ export function PujoHero() {
             <span className="pujo-scene__title-accent">Love Story.</span>
           </h1>
           <p className="pujo-scene__subtitle">Some songs smell like autumn.</p>
-          <PujoSoundtrack />
+          <PujoSoundtrack tracks={tracks} />
         </div>
 
         <footer className="pujo-scene__footer">

@@ -1,6 +1,7 @@
 "use client";
 
-import { AGOMONI_PLAYLIST, AGOMONI_TRACKS } from "@/src/audio/playlists";
+import { AGOMONI_PLAYLIST, FALLBACK_TRACKS } from "@/src/audio/playlists";
+import type { Track } from "@/src/audio/types";
 import { usePlayback } from "@/src/audio/usePlayback";
 import { useYouTubeHost } from "@/src/audio/useYouTubeHost";
 
@@ -12,10 +13,14 @@ function formatTime(seconds: number) {
   return `${minutes}:${remainder.toString().padStart(2, "0")}`;
 }
 
-export function PujoSoundtrack() {
+type PujoSoundtrackProps = {
+  tracks?: Track[];
+};
+
+export function PujoSoundtrack({ tracks = FALLBACK_TRACKS }: PujoSoundtrackProps) {
   const playback = usePlayback({
     playlist: AGOMONI_PLAYLIST,
-    tracks: AGOMONI_TRACKS,
+    tracks: tracks.length > 0 ? tracks : FALLBACK_TRACKS,
   });
 
   const { hostRef } = useYouTubeHost({
