@@ -32,18 +32,21 @@ const particles = [
 
 type ShareState = "idle" | "copied" | "shared";
 
-const shareCopy: Record<ShareState, { button: string; note: string }> = {
+const shareCopy: Record<ShareState, { button: string; note: string; icon: string }> = {
   idle: {
     button: "Send this to your Pujo person",
     note: "For the one who still lives inside your autumn soundtrack.",
+    icon: "🪔",
   },
   copied: {
     button: "Link copied into the night",
     note: "Let nostalgia do the rest.",
+    icon: "✨",
   },
   shared: {
     button: "Sent with a little dhak in the air",
     note: "Shared. Let the pandal lights carry it.",
+    icon: "🏮",
   },
 };
 
@@ -157,7 +160,7 @@ export function PujoHero({ tracks }: PujoHeroProps) {
 
     const timeoutId = window.setTimeout(() => {
       startTransition(() => setShareState("idle"));
-    }, 2600);
+    }, 2800);
 
     return () => window.clearTimeout(timeoutId);
   }, [shareState]);
@@ -220,7 +223,7 @@ export function PujoHero({ tracks }: PujoHeroProps) {
       </div>
 
       <div className="pujo-scene__shell">
-        {/* Top Header / Brand Nav (busdriver.wtf style) */}
+        {/* Top Header / Brand Nav */}
         <header className="pujo-scene__header">
           <div className="pujo-scene__brand">
             <span className="flex size-3.5 items-center justify-center rounded-full bg-[#dfbd73]/30 p-0.5">
@@ -230,8 +233,18 @@ export function PujoHero({ tracks }: PujoHeroProps) {
               <p className="font-serif text-base sm:text-lg font-bold text-[#f7ead7] leading-none">
                 পূজা প্রেম · Pujo Prem
               </p>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-[#dfbd73]/80 mt-1">
-                Kolkata · Autumn Nights
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#dfbd73]/80 mt-1 flex items-center gap-1.5 flex-wrap">
+                <span>Kolkata · Autumn Nights</span>
+                <span className="opacity-40">·</span>
+                <a
+                  href="https://x.com/0xsushanta"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline hover:text-white transition-colors"
+                  title="Created by Sushanta (@0xsushanta) on X"
+                >
+                  by @0xsushanta
+                </a>
               </p>
             </div>
           </div>
@@ -263,14 +276,22 @@ export function PujoHero({ tracks }: PujoHeroProps) {
             Some songs smell like autumn &amp; pandal light.
           </p>
 
-          <div className="mt-8 flex justify-center">
+          {/* Elevated Aesthetic Share Card */}
+          <div className="mt-8 flex flex-col items-center gap-2.5">
             <button
               type="button"
               onClick={sharePage}
-              className="pujo-share__button"
+              className="group relative inline-flex items-center gap-3 rounded-full border border-[#dfbd73]/40 bg-gradient-to-r from-[#dfbd73]/18 via-white/8 to-[#cf3a30]/15 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#f7ead7] shadow-[0_12px_32px_-8px_rgba(223,189,115,0.25)] backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] hover:border-[#dfbd73]/70 hover:shadow-[0_16px_40px_-6px_rgba(223,189,115,0.4)] active:scale-95 cursor-pointer"
             >
-              {shareCopy[shareState].button}
+              <span className="text-sm transition-transform duration-300 group-hover:rotate-12">
+                {shareCopy[shareState].icon}
+              </span>
+              <span>{shareCopy[shareState].button}</span>
             </button>
+
+            <p aria-live="polite" className="text-xs font-serif italic text-[#f7ead7]/70 text-center max-w-sm">
+              {shareCopy[shareState].note}
+            </p>
           </div>
         </div>
 
