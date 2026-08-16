@@ -69,7 +69,7 @@ export default function AboutPage() {
           </h1>
 
           <p className="font-serif italic text-base sm:text-xl text-[#dfbd73]/90 mt-2 text-balance">
-            &ldquo;শরতের কাশের বোন, শিউলি ফুল, আর মাইকের সুরের ব্যাকগ্রাউন্ড স্কোর।&rdquo;
+            &ldquo;শরতের কাশের বন, শিউলি ফুল, আর মাইকের সুরের ব্যাকগ্রাউন্ড স্কোর।&rdquo;
           </p>
 
           <div className="mt-6 space-y-4 text-xs sm:text-sm leading-relaxed text-[#f7ead7]/80 font-sans">
