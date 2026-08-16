@@ -5,7 +5,6 @@ import Link from "next/link";
 import { startTransition, useEffect, useEffectEvent, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Track } from "@/src/audio/types";
-import { GitHubStarButton } from "./github-star-button";
 import { PujoSoundtrack } from "./pujo-soundtrack";
 
 const petals = [
@@ -238,15 +237,6 @@ export function PujoHero({ tracks }: PujoHeroProps) {
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#dfbd73]/80 mt-1 flex items-center gap-1.5 flex-wrap">
                 <span>Kolkata · Autumn Nights</span>
                 <span className="opacity-40">·</span>
-                <a
-                  href="https://x.com/0xsushanta"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline hover:text-white transition-colors"
-                  title="Created by Sushanta (@0xsushanta) on X"
-                >
-                  by @0xsushanta
-                </a>
               </p>
             </div>
           </div>
@@ -260,7 +250,6 @@ export function PujoHero({ tracks }: PujoHeroProps) {
                 Kolkata Time
               </p>
             </div>
-            <GitHubStarButton repo="0xsushanta/puja-prem" variant="header" />
             <Link
               href="/about"
               className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-wider text-[#f7ead7]/80 backdrop-blur-md hover:bg-white/15 hover:text-white transition"
